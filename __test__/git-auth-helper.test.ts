@@ -169,8 +169,9 @@ describe('git-auth-helper tests', () => {
 
     // Mock fs.promises.readFile
     const realReadFile = fs.promises.readFile
-    jest.spyOn(fs.promises, 'readFile').mockImplementation(
-      async (file: any, options: any): Promise<Buffer> => {
+    jest
+      .spyOn(fs.promises, 'readFile')
+      .mockImplementation(async (file: any, options: any): Promise<Buffer> => {
         const userKnownHostsPath = path.join(
           os.homedir(),
           '.ssh',
@@ -181,8 +182,7 @@ describe('git-auth-helper tests', () => {
         }
 
         return await realReadFile(file, options)
-      }
-    )
+      })
 
     // Act
     const authHelper = gitAuthHelper.createAuthHelper(git, settings)
@@ -821,6 +821,7 @@ async function setup(testName: string): Promise<void> {
     sshKey: sshPath ? 'some ssh private key' : '',
     sshKnownHosts: '',
     sshStrict: true,
+    sshUser: '',
     workflowOrganizationId: 123456,
     setSafeDirectory: true,
     githubServerUrl: githubServerUrl
